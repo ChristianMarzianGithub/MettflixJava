@@ -81,6 +81,8 @@ public class Main extends HttpServlet {
         out.println("    </head>");
         out.println();
         out.println("    <body style=\"line-height: 1.5em;\">");
+        out.println(System.getProperty("user.dir"));
+        out.println("<img src=\"C:\\xampp\\Tomcat\\webapps\\JMettflixServer\\media\\a.png\" >");
         out.println("        <form method=\"post\">");
         out.println("            <b>Suche:</b><br />");
         out.println("            <input type=\"text\" name=\"suchbegriff\" /><br />");        
@@ -119,6 +121,8 @@ public class Main extends HttpServlet {
         out.println("        <b>Ergebnisse zu : '" + request.getParameter("suchbegriff") + "'</b><br />");
         String s = getListe(request.getParameter("suchbegriff"));
         out.println(s);
+        
+        
         out.println("    </body>");
         out.println("</html>");
         out.close();
