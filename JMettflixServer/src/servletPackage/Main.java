@@ -45,13 +45,9 @@ public class Main extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served 08452 at: ").append(request.getContextPath());
-		response.getWriter().append("<b>hallo</b>World");
+		response.getWriter().append("TSuchergebnisse:\n");
 		String s = getListe("Fight CLub");
 		response.getWriter().append(s);
-		
-		
-		
 	}
 
 	/**
