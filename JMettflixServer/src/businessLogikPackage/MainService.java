@@ -25,15 +25,21 @@ public class MainService {
 		return retVal;
 	}
 		
-	public List<FilmModel> getFilmListe(String Suchbegriff) throws SQLException{		
+	public List<FilmModel> getFilmListe(String Suchbegriff) {		
 		
 		String query = "SELECT BEZEICHNUNG,ID FROM FILM WHERE BEZEICHNUNG LIKE '%" + Suchbegriff + "%'";
 		
 		List<FilmModel> retListe = new ArrayList<FilmModel>();
+		
 		ResultSet ResultSetFilmSuchListe = bo.getResultSetFromQuery(query);
 		
-		while(ResultSetFilmSuchListe.next()) {
-			retListe.add(new FilmModel(ResultSetFilmSuchListe.getString(1),ResultSetFilmSuchListe.getInt(2)));
+		try {
+			while(ResultSetFilmSuchListe.next()) {
+				retListe.add(new FilmModel(ResultSetFilmSuchListe.getString(1),ResultSetFilmSuchListe.getInt(2)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return retListe;
 	}

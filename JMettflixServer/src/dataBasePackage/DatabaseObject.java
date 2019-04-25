@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,12 +71,18 @@ public class DatabaseObject {
     public Connection getCon(){
         Connection con = null;
         try {
-            con = DriverManager.getConnection(
-                    "jdbc:" + this.dbKind.toString() + "://" + this.host + ":" + this.port +"/" + this.dataBase + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",this.usr,this.pw);
+        	String url = "jdbc:mysql://" + this.host + ":" + this.port +"/" + this.dataBase + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            System.out.println(url);
+        	con = DriverManager.getConnection(
+                    url,this.usr,this.pw);
             
-        } catch (SQLException ex) {
+        } catch (SQLTimeoutException ex) {
             //Logger.getLogger(DatabaseObject.class.getName()).log(Level.SEVERE, null, ex);
         	System.out.println(ex.getMessage());
+        	System.out.println(ex.getErrorCode());
+        }catch(SQLException ex) {
+        	System.out.println(ex.getMessage());
+        	System.out.println(ex.getErrorCode());
         }
         return con;
     }
@@ -100,8 +107,9 @@ public class DatabaseObject {
                 /*
                 while(rs.next()){
                     System.out.println(rs.getInt(1));
-                }   
-                */                       
+                } 
+                */  
+                                
         } catch (SQLException e) {
         	System.out.println(e.getMessage());
         }  
