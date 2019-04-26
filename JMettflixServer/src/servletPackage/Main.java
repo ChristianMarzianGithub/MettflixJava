@@ -2,6 +2,7 @@ package servletPackage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,14 +47,18 @@ public class Main extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
-    private String getListe(String suchbegriff) {
-    	String retVal = "";
+    private JSONArray getListe(String suchbegriff) {
+    	JSONArray retVal = new JSONArray();
     	MainService mainServ = new MainService(EdbKind.MYSQL,"testdb","localhost","3306","root","root");
 		
 		List<FilmModel> sut = mainServ.getFilmListe(suchbegriff);
 		
-		for(int i = 0; i < sut.size(); i++) {				
-			retVal = sut.get(i).getBezeichnung();
+		JSONObject jObject;
+		for(int i = 0; i < sut.size(); i++) {		
+			jObject = new JSONObject();
+			jObject.put(	"bezeichnung",sut.get(i).getBezeichnung());
+			jObject.put(	"id",sut.get(i).getId());			
+			retVal.add(jObject);
 		}    	
     	return retVal;
     }
@@ -137,10 +142,8 @@ public class Main extends HttpServlet {
         out.println("</html>");
         out.close();
         */
+		JSONArray asdf = getListe(request.getParameter("suchbegriff"));
 		
-		JSONObject obj=new JSONObject();    
-		obj.put("id","sonoo");    
-		obj.put("bezeichnung",getListe(request.getParameter("suchbegriff")));
-		response.getWriter().print(obj);
+		response.getWriter().print(asdf);
 	}
 }
