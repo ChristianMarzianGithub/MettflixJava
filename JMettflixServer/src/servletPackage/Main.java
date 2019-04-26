@@ -2,7 +2,6 @@ package servletPackage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import businessLogikPackage.*;
+import org.json.JSONObject;
+import org.json.simple.JSONArray;
+
+import businessLogikPackage.EdbKind;
+import businessLogikPackage.FilmModel;
+import businessLogikPackage.MainService;
 
 /**
  * Servlet implementation class Main
@@ -70,10 +74,13 @@ public class Main extends HttpServlet {
 		response.getWriter().append("<body>");
 		response.getWriter().append("</html>");
 		*/
+		/*
 		// Ausgabe als HTML-Seite
-        response.setContentType("text/html;charset=UTF-8");
+        
+		response.setContentType("text/html;charset=UTF-8");
          
         // Ausgabe durchführen
+        
         PrintWriter out = response.getWriter();
         out.println("<!DOCTYPE html>");
         out.println("<html>");
@@ -81,8 +88,7 @@ public class Main extends HttpServlet {
         out.println("    </head>");
         out.println();
         out.println("    <body style=\"line-height: 1.5em;\">");
-        out.println(System.getProperty("user.dir"));
-        out.println("<img src=\"C:\\xampp\\Tomcat\\webapps\\JMettflixServer\\media\\a.png\" >");
+        out.println(System.getProperty("user.dir"));        
         out.println("        <form method=\"post\">");
         out.println("            <b>Suche:</b><br />");
         out.println("            <input type=\"text\" name=\"suchbegriff\" /><br />");        
@@ -91,12 +97,16 @@ public class Main extends HttpServlet {
         out.println("    </body>");
         out.println("</html>");
         out.close();
+        */
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		request.setCharacterEncoding("UTF-8");
@@ -126,5 +136,11 @@ public class Main extends HttpServlet {
         out.println("    </body>");
         out.println("</html>");
         out.close();
+        */
+		
+		JSONObject obj=new JSONObject();    
+		obj.put("id","sonoo");    
+		obj.put("bezeichnung",getListe(request.getParameter("suchbegriff")));
+		response.getWriter().print(obj);
 	}
 }
